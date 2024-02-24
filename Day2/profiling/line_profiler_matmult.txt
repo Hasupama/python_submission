@@ -1,0 +1,42 @@
+Wrote profile results to matmult.py.lprof
+Timer unit: 1e-06 s
+
+Total time: 11.7724 s
+File: matmult.py
+Function: main at line 5
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+     5                                           @profile
+     6                                           def main():
+     7         1          0.6      0.6      0.0      N = 250
+     8
+     9                                               # NxN matrix
+    10         1          0.4      0.4      0.0      X = []
+    11       251        276.2      1.1      0.0      for i in range(N):
+    12     62750     298655.3      4.8      2.5         X.append([random.randint(0,100) for r in range(N)])
+    13
+    14                                               # Nx(N+1) matrix
+    15         1          0.3      0.3      0.0      Y = []
+    16       251         73.4      0.3      0.0      for i in range(N):
+    17     63000     294594.2      4.7      2.5          Y.append([random.randint(0,100) for r in range(N+1)])
+    18
+    19                                               # result is Nx(N+1)
+    20         1          0.3      0.3      0.0      result = []
+    21       251         74.5      0.3      0.0      for i in range(N):
+    22       250        354.9      1.4      0.0          result.append([0] * (N+1))
+    23
+    24                                               # iterate through rows of X
+    25       251         87.5      0.3      0.0      for i in range(len(X)):
+    26                                                   # iterate through columns of Y
+    27     63000      21570.4      0.3      0.2          for j in range(len(Y[0])):
+    28                                                       # iterate through rows of Y
+    29  15750250    4967360.0      0.3     42.2              for k in range(len(Y)):
+    30  15687500    6079824.0      0.4     51.6                  result[i][j] += X[i][k] * Y[k][j]
+    31
+    32       251        222.1      0.9      0.0      for r in result:
+    33       250     109343.5    437.4      0.9          print(r)
+    34         1          2.3      2.3      0.0      return result
+
+
+## 29 and 30 lines should be optimized
